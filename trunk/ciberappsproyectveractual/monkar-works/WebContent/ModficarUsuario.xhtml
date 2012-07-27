@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml"  
+xmlns:h="http://java.sun.com/jsf/html"  
+xmlns:f="http://java.sun.com/jsf/core"  
+xmlns:p="http://primefaces.org/ui">
+<h:form id="form_UpDatePersona">
+    <h:messages/>    
+    <p:growl id="growl" showDetail="true" sticky="true" />    
+    <h:panelGrid columns="3">
+               
+                <h:outputLabel value="usuario" for="usuario" />
+                <h:outputText value="#{UsuarioSesion.usuario}" styleClass="outputLabel"/>
+                <h:message for="usuario"/>
+                
+                <h:outputLabel value="Nombre" for="nombre" />
+                <h:inputText value="#{UsuarioSesion.nombre}" id="nombre" required="true"/>
+                <h:message for="nombre"/>
+                
+                <h:outputLabel value="Apellido" for="apellido" />
+                <h:inputText value="#{UsuarioSesion.apellido}" id="apellido" required="true"/>
+                <h:message for="apellido"/>
+                
+                <h:outputLabel value="Correo Electronico" for="correo" />
+                <h:inputText value="#{UsuarioSesion.email}" id="correo" required="true"/>
+                <h:message for="correo"/>
+				
+                
+                <h:outputLabel value="Contraseña Antigua" for="contrasenia" />
+                <h:inputSecret value="#{usuarioBB.contrasenia}" id="contrasenia" required="true" validator="#{usuarioBB.validateMismaContra}" />   
+                <h:message for="contrasenia"/>
+                
+                <h:outputLabel value="Contraseña Nueva" for="contrasenia1" />
+                <h:inputSecret value="#{usuarioBB.contrasenia1}" id="contrasenia1" required="true"/>   
+                <h:message for="contrasenia1"/>              
+                
+                
+                <h:outputText value="Dar de baja: " />  
+		         <p:selectBooleanCheckbox value="#{usuarioBB.activo}" />
+		          
+               	
+                <h:outputText value="" />
+                <p:commandButton actionListener="#{usuarioBB.actualizarPass}" value="Registrar"
+                oncomplete="cerrardialogreg()"
+                />
+                
+                
+                
+                
+        </h:panelGrid>
+        <script type="text/javascript">
+			function metodojquery(xhr, status, args) {
+				if (args.validationFailed || !args.paso) {
+					jQuery('#dlgPass').effect("shake", {
+						times : 3
+					}, 100);
+				} else {
+					_dlgPass.hide();
+					
+				}
+			}
+		</script>
+</h:form>
+
+
+          
+</html>
+

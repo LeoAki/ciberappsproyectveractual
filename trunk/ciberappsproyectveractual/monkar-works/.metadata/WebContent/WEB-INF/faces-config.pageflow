@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf13432750025090" configfile="/monkar-works/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="MantenimientoUsuario.xhtml" x="132" y="456" id="pf13433449160760" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf13433449160761" path="/MantenimientoUsuario.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="447" y="575" id="pf13433449160762" inlinks="pf13433449160761" path="/index.xhtml"/>
+  <links id="pf13433449160761" target="pf13433449160762" source="pf13433449160760" outcome="grabo"/>
+</pageflow:Pageflow>

@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" lang="es">
+<f:view contentType="text/html" />
+
+
+<h:head>
+	<link rel="stylesheet" href="#{request.contextPath}/css/basico.css" />
+	<link rel="stylesheet" href="#{request.contextPath}/css/utiles.css" />
+	<title>.:MonkarWorks:.</title>
+</h:head>
+<h:body>
+	<p:layout id="container" styleClass="ui-corner-all">
+		<!-- 	PANEL IZQUIERDO -->
+		<p:layoutUnit position="west" size="200" id="lyLeft">
+			<p:layout style="height:100%;" >
+
+				<!-- 	        BUSQUEDA -->
+				<p:layoutUnit position="north" size="350" id="lyLeftTop">
+					<ui:include src="layout/left_top.xhtml"></ui:include>
+				</p:layoutUnit>
+
+				<!-- 			MENU LATERAL -->
+				<p:layoutUnit position="center" id="lyLeftCenter">
+					<ui:include src="layout/left_center.xhtml"></ui:include>
+				</p:layoutUnit>
+				
+				<!-- 			MENU FOOT -->
+				<p:layoutUnit position="south" size="60" id="pnlMonkar">
+					<a href="#" class="autor" title="Comunícate con el Desarrollador !" onclick="_dlgMensaje.show()">Monkar!</a>
+					<span>Sistema de Difusión de Proyectos.</span> 
+				</p:layoutUnit>
+			</p:layout>
+		</p:layoutUnit>
+		<!-- 	    FIN PANEL IZQUIERDO -->
+
+		<!-- 	  PANEL DERECHO -->
+		<p:layoutUnit position="center" id="lyCenter">
+			<p:layout style="height:100%;">
+				<!-- 	        MENU SUPERIOR -->
+				<p:layoutUnit position="north" size="40" id="lyCenterTop">
+					<ui:include src="layout/center_top.xhtml"></ui:include>
+				</p:layoutUnit>
+				<!-- 		CUERPO CUERPO -->
+				<p:layoutUnit position="center" id="lyCenterCenter">
+					<ui:include src="layout/center_center.xhtml"></ui:include>
+				</p:layoutUnit>
+			</p:layout>
+		</p:layoutUnit>
+		<!-- 	    FIN PANEL DERECHO -->
+	</p:layout>
+
+
+
+		<p:dialog header="Login" widgetVar="_dlgAcceso" id="dlgAcceso"
+			modal="true">
+			<ui:include src="login.xhtml"></ui:include>
+		</p:dialog>
+		
+		<p:dialog header="Mensaje" widgetVar="_dlgMensaje" id="dlgMensaje"
+			modal="true">
+			<ui:include src="contactenos.xhtml"></ui:include>
+		</p:dialog>
+		
+		<p:dialog header="Registro" widgetVar="_dlgReg" id="dlgReg" modal="true">
+			<ui:include src="MantenimientoUsuario.xhtml"></ui:include>
+		</p:dialog>
+		
+		<p:dialog header="Modifica" widgetVar="_dlgModificar" id="dlgModificar" modal="true">
+			<ui:include src="ModficarUsuario.xhtml"></ui:include>
+		</p:dialog>
+		
+
+		
+	<!-- MENSAJE GENERAL-->
+	<p:growl id="growl" showDetail="true" life="3000" />
+
+
+	
+	<script type="text/javascript">
+		function handleLoginRequest(xhr, status, args) {
+			if (args.validationFailed || !args.loggedIn) {
+				jQuery('#dlgAcceso').effect("shake", {
+					times : 3
+				}, 100);
+			} else {
+				_dlgAcceso.hide();
+				jQuery('#loginLink').fadeOut();
+			}
+		}
+		
+		function realizarCompra(){
+				dlgDetalleAplicacion.hide();
+		}
+		
+		
+		$("#btnNuevoUsuario").live("click",function(){
+			alert("adsadsasd");
+			
+			dlgReg.show();
+			
+		});
+		
+		function metodojqueryNewUser(xhr, status, args) {
+				if (args.validationFailed || !args.paso) {
+					jQuery('#dlgReg').effect("shake", {
+						times : 3
+					}, 100);
+				} else {
+					_dlgReg.hide();
+				}
+			}
+		function cerrardialogreg(){
+			dlgReg.hide();
+		}
+		
+// 		function removerMenuFavoritos(){
+// 			alert("Borra favoritos !");
+// 		}
+		
+		
+	</script>
+</h:body>
+</html>
