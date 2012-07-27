@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" lang="es">
+<f:view contentType="text/html" />
+
+
+<h:head>
+</h:head>
+<h:body>
+
+	<p:carousel value="#{aplicacionBB.listaTopCabecera}" var="x"
+		itemStyleClass="top_carousel" pageLinks="6" autoPlayInterval="10000"
+		rows="1" effect="easeInStrong" circular="true">
+		<p:graphicImage value="/apps/#{x.imagen_big}" />
+	</p:carousel>
+	<div class="span_top"></div>
+
+	<p:dataGrid id="listaAplicaciones" var="app"
+		value="#{aplicacionBB.listaAplicaciones}" columns="4" rows="8"
+		paginator="true"
+		paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink} {RowsPerPageDropdown}"
+		styleClass="contenedorAplicaciones"
+		emptyMessage="No se encontraron aplicaciones x( ">
+		<p:column>
+			<p:panel styleClass="panelAplicacion" header="#{app.nombre}">
+				<p:commandLink update=":frmCenterCenter:dlgDetalleAplicacion"
+					oncomplete="dlgDetalleAplicacion.show()" title="Comprar !"
+					actionListener="#{aplicacionBB.mostrarDetalles}">
+					<f:attribute name="idAplicacion" value="#{app.idAplicacion}" />
+					<p:graphicImage value="/apps/#{app.imagen_min}" />
+					<f:setPropertyActionListener value="#{app}"
+						target="#{aplicacionBB.aplicacion}" />
+				</p:commandLink>
+				<p:rating value="#{app.puntuacion}" readonly="true"
+					styleClass="span_top" />
+				<h:outputLabel value="#{app.num_descargas} Descargas"
+					styleClass="txtCantidadDescargas" />
+
+
+			</p:panel>
+		</p:column>
+	</p:dataGrid>
+
+
+	<!-- 	    			DIALOGO DETALLE DE LA APLICACION -->
+	<p:dialog id="dlgDetalleAplicacion" widgetVar="dlgDetalleAplicacion"
+		showEffect="fade" hideEffect="fade" header="DETALLES" width="900"
+		height="600">
+		<p:outputPanel id="panelDetalleAplicacion" layout="block">
+			<p:tabView
+				style="height:560px !important;min-height:560px !important;">
+				<p:tab title="DESCRIPCIÓN GENERAL" id="tabDescripcionGeneral">
+					<p:layout style="min-height:500px;max-height:500px; width:830px;">
+						<p:layoutUnit position="north" resizable="false" size="240"
+							id="ly_detalle_top">
+							<p:graphicImage
+								value="/apps/#{aplicacionBB.aplicacion.imagen_big}" />
+
+						</p:layoutUnit>
+						<p:layoutUnit position="west" resizable="true" size="290"
+							minSize="20" maxSize="290">
+							<p:panelGrid columns="2" id="pnlDetallesTecnicos">
+								<f:facet name="header">  
+						        Detalles Técnicos  
+						    </f:facet>
+
+								<h:outputLabel value=" Código :" />
+								<h:outputLabel value="#{aplicacionBB.aplicacion.codigo}" />
+
+								<h:outputLabel value="Nombre :" />
+								<h:outputLabel value="#{aplicacionBB.aplicacion.nombre}" />
+
+								<h:outputLabel value="Versión :" />
+								<h:outputLabel value="#{aplicacionBB.aplicacion.version}" />
+
+								<h:outputLabel value="Desarrollador :" />
+								<h:outputLabel
+									value="#{aplicacionBB.aplicacion.desarrollador.empresa}" />
+
+								<h:outputLabel value="Veces Descargado :" />
+								<h:outputLabel value="#{aplicacionBB.aplicacion.num_descargas}" />
+
+								<h:outputLabel value="Valoración :" />
+								<p:rating value="#{aplicacionBB.aplicacion.puntuacion}"
+									readonly="true" />
+
+								<h:outputLabel value="Categoría :" />
+								<h:outputLabel
+									value="#{aplicacionBB.aplicacion.sub_categoria.nombre}" />
+
+								<h:outputLabel value="Precio :" />
+								<h:outputLabel value="#{aplicacionBB.aplicacion.precio}" />
+
+								<h:outputLabel value="Fecha de Registro :" />
+								<h:outputLabel value="#{aplicacionBB.aplicacion.fec_registro}" />
+
+
+							</p:panelGrid>
+						</p:layoutUnit>
+						<p:layoutUnit position="center">
+							<h1>#{aplicacionBB.aplicacion.nombre}</h1>
+							<h4>#{aplicacionBB.aplicacion.subtitulo}</h4>
+							<h:outputLabel
+								value="#{aplicacionBB.aplicacion.descripcionTotal}" />
+							<h:outputLabel
+								value="#{aplicacionBB.aplicacion.descripcionTotal}" />
+						</p:layoutUnit>
+					</p:layout>
+				</p:tab>
+
+
+				<p:tab title="GALERÍA DE IMAGENES">
+	
+					
+					<p:galleria var="img" filmstripPosition="top"
+						value="#{aplicacionBB.aplicacion.imagenes}" styleClass="centrado"
+						showOverlays="true">
+						<p:graphicImage value="/apps/#{img.ruta}" />
+						<p:galleriaOverlay>  
+									        #{img.titulo} 
+									  </p:galleriaOverlay>
+					</p:galleria>
+				</p:tab>
+
+
+				<p:tab title="OPINIONES">
+					<ui:repeat var="compra" value="#{aplicacionBB.aplicacion.compras}">
+						<!-- 							valido si la compra tiene algun comentario -->
+						<h:panelGroup rendered="#{compra.comentario != ''}">
+							<p:panel header="#{compra.usuario.usuario}" toggleable="true"
+								toggleSpeed="100" styleClass="pnlComentario span_top">
+								<h:panelGrid columns="1" styleClass="sinBorde">
+									<h:outputText value="#{compra.comentario}" />
+									<p:rating value="#{compra.valoracion}" readonly="true" />
+								</h:panelGrid>
+							</p:panel>
+						</h:panelGroup>
+
+					</ui:repeat>
+				</p:tab>
+
+				<!-- 					VALIDAR IS EL USUARIO YA COMPRO LA APLICACION -->
+
+				<p:tab title="COMPRA">
+					<c:if test="${UsuarioSesion!=null}">
+						<h:panelGroup rendered="#{aplicacionBB.compra.idCompra > 0}">
+							<p:panel header="#{aplicacionBB.compra.usuario.usuario}"
+								styleClass="pnlComentario span_top">
+								<h:panelGrid columns="1" styleClass="sinBorde">
+									<p:inputTextarea value="#{aplicacionBB.compra.comentario}"
+										cols="100" />
+									<p:rating value="#{aplicacionBB.compra.valoracion}" />
+								</h:panelGrid>
+							</p:panel>
+						</h:panelGroup>
+
+						<p:commandButton id="downloadLink" value="DESCARGAR" ajax="true" update=":growl,:frmCenterCenter"
+							action="#{aplicacionBB.comprarAplicacion}"
+							oncomplete="realizarCompra()">
+							<p:fileDownload value="#{aplicacionBB.file}" />
+						</p:commandButton>
+					</c:if>
+					<c:if test="${UsuarioSesion==null}">
+						<p:toolbarGroup align="right">
+							<p:commandButton type="button" icon="ui-icon-key"
+								onclick="_dlgAcceso.show()"
+								value="Registrese para poder comprar esta aplicacion"
+								title="Registrarse !" />
+						</p:toolbarGroup>
+					</c:if>
+				</p:tab>
+
+
+
+
+			</p:tabView>
+		</p:outputPanel>
+	</p:dialog>
+</h:body>
+</html>

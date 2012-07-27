@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    lang="es">
+<f:view contentType="text/html"/>
+
+
+<h:head>
+</h:head>
+<h:body>
+<h:form id="frmLeftTop">
+		<div id="logo">
+		<p:commandLink update=":frmCenterCenter"
+			action="#{aplicacionBB.listarVacio}" id="cmdLogo">
+			<p:graphicImage value="/img/logoCiber.jpg"  />
+		</p:commandLink>
+		</div>
+		
+
+		<div class="span_top">
+			<p:panel header="Busqueda">
+				<p:autoComplete value="#{aplicacionBB.tag}" completeMethod="#{aplicacionBB.complete}" size="18"  />
+						<p:commandButton value="Buscar" actionListener="#{aplicacionBB.listarxtag}" update=":frmCenterCenter,:frmCenterTop"  />
+			</p:panel>
+		</div>
+		
+<!-- 		ACA ES DINAMICO  -->
+<!-- 	 <h:panelGroup id="contenedorMenuFavoritos" layout="block"> -->
+<!-- 		<p:menu model="#{categoriaBB.menuFavoritos}" style="width:auto" styleClass="span_top" onShow="removerMenuFavoritos()"/>   -->
+<!-- 	</h:panelGroup> -->
+	
+	<p:menu style="width:auto" styleClass="span_top">
+		<p:submenu label="Favoritos x]">
+   			<p:menuitem value="Mejor Valoradas" action="#{aplicacionBB.listarMejorValorados()}" icon="ui-icon-star" update=":frmCenterCenter,:growl"/>  
+   			<p:menuitem value="Del Momento"   action="#{aplicacionBB.listarVacio()}" icon="ui-icon-suitcase" update=":frmCenterCenter,:growl"/>
+   			<p:menuitem value="Más Descargadas" action="#{aplicacionBB.listarMasDescargados()}" icon="ui-icon-link" update=":frmCenterCenter,:growl"/>
+   		</p:submenu>
+   	</p:menu>
+	         			
+		
+	</h:form>
+</h:body>
+
+</html>
